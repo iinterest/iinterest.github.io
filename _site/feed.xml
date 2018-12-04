@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-12-04T11:37:48+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">iinTERest’s Blog</title><subtitle>仰望天空、脚踏实地。</subtitle><entry><title type="html">MacOS 安装 Jekyll 踩过的坑</title><link href="http://localhost:4000/jekyll/update/2018/12/04/macos-install-jekyll-problems.html" rel="alternate" type="text/html" title="MacOS 安装 Jekyll 踩过的坑" /><published>2018-12-04T09:37:44+08:00</published><updated>2018-12-04T09:37:44+08:00</updated><id>http://localhost:4000/jekyll/update/2018/12/04/macos-install-jekyll-problems</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2018/12/04/macos-install-jekyll-problems.html">&lt;p&gt;在 MacOS 上做开发一直是很惬意的一件事情，因为是 Unix-like 系统在环境的搭建方面有着很多便利，但在安装 Jekyll 时却遇到了不少坑，这里记录下。&lt;/p&gt;
+
+&lt;h2 id=&quot;一安装&quot;&gt;一、安装&lt;/h2&gt;
+
+&lt;p&gt;安装之前先要确认下安装的环境，需要先安装 Xcode、Ruby，虽然 MacOS 自带 Ruby，但版本比较低（2.3.0），所以我还是手动安装了一个最新版的 Ruby：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install ruby
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;并配置环境变量，&lt;code class=&quot;highlighter-rouge&quot;&gt;.bash_profile&lt;/code&gt;：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export PATH=$PATH:/usr/local/Cellar/ruby/2.5.3_1/bin
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;接下来按照官方文档执行安装命令：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sodu gem install bundler jekyll
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这个时候出现报错：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ERROR:  Error installing jekyll:
+ERROR: Failed to build gem native extension.
+......
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;查了下 &lt;a href=&quot;https://stackoverflow.com/questions/10725767/error-installing-jekyll-native-extension-build&quot;&gt;stackoverflow&lt;/a&gt;，是缺少 Xcode-select 工具，可以用以下命令安装：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcode-select --install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;再次执行 jekyll 安装命令，安装完成。&lt;/p&gt;
+
+&lt;h2 id=&quot;二运行&quot;&gt;二、运行&lt;/h2&gt;
+
+&lt;p&gt;安装好 jekyll 后习惯性的运行 &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll -v&lt;/code&gt; 命令来查看是否安装成功，发现报错：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-bash: jekyll: command not found
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;根据经验应该是环境变量没配好，查了下文档（对 Ruby 确实不太了解，囧），可以用 &lt;code class=&quot;highlighter-rouge&quot;&gt;gem env&lt;/code&gt; 命令查看 gem 包的安装目录，然后手动添加了 jekyll 的环境变量，&lt;code class=&quot;highlighter-rouge&quot;&gt;.bash_profile&lt;/code&gt;：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export PATH=$PATH:/usr/local/Cellar/ruby/2.5.3_1/bin:/usr/local/lib/ruby/gems/2.5.0/gems/jekyll-3.8.5/exe
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;运行 &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll -v&lt;/code&gt; 返回 &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll 3.8.5&lt;/code&gt;，说明配置成功，接着按照文档执行项目初始化命令：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jekyll new my-awesome-site
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;运行过程中再次报错：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Installing eventmachine 1.2.7 with native extensions
+Gem::Ext::BuildError: ERROR: Failed to build gem native extension
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;原以为只是简单的安装失败，所以按照提示，手动安装了 eventmachine：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install eventmachine
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;再次运行项目初始化命令，但还是报错，于是查看详细的错误日志，发现 eventmachine 编译需要 Ruby 2.4 以上版本，而我的 Ruby 编译是 2.3.0，2.3.0 应该是 MacOS 自带的版本，这就非常奇怪了，我明明安装了 2.5.1 版本，配置也OK（which ruby），并且手动安装 eventmachine 也成功了（gem list），怎么这里却是是用的老版本的 Ruby…，查了不少资料后还是无法解决，最后决定安装 rvm 试试能否曲线救国。&lt;/p&gt;
+
+&lt;h2 id=&quot;三安装-rvm&quot;&gt;三、安装 RVM&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://rvm.io/&quot;&gt;RVM&lt;/a&gt; 是 Ruby 的版本管理器，因为 rvm 安装需要安装公钥而 Mac OS X 不附带 gpg，所以先安装 gpg：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install gnupg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;接着安装 mpapis 公钥&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;提示&lt;code class=&quot;highlighter-rouge&quot;&gt;公钥服务器不可用&lt;/code&gt;，想了想难道是被墙了？于是为终端设置了下代理&lt;code class=&quot;highlighter-rouge&quot;&gt;export http_proxy=sock5://127.0.0.1:1080&lt;/code&gt;，安装完成，如果没有梯子或者设置有问题，可以尝试以下命令：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;最后安装 rvm：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;\curl -sSL https://get.rvm.io | bash -s stable
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;需要注意的是安装过程中某些域名还是需要梯子才能访问，然后 rvm 会自动安装最新版本的 Ruby，全部安装完成后可以执行 &lt;code class=&quot;highlighter-rouge&quot;&gt;rvm list&lt;/code&gt; 命令查看当前所用 Ruby 版本，可以看到是最新的 2.5.1：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;=* ruby-2.5.1 [ x86_64 ]
+# =&amp;gt; - current
+# =* - current &amp;amp;&amp;amp; default
+#  * - default
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;再次尝试 jekyll 生成新的项目：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jekyll new my-awesome-site
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;执行成功！&lt;/p&gt;
+
+&lt;p&gt;至此 jekyll 安装完成，基本上能踩的坑都已经踩了吧。。。相比熟悉的 NodeJS 确实要折腾很多。&lt;/p&gt;</content><author><name></name></author><summary type="html">在 MacOS 上做开发一直是很惬意的一件事情，因为是 Unix-like 系统在环境的搭建方面有着很多便利，但在安装 Jekyll 时却遇到了不少坑，这里记录下。</summary></entry></feed>

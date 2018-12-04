@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>MacOS 安装 Jekyll 踩过的坑 | iinTERest’s Blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="MacOS 安装 Jekyll 踩过的坑" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="在 MacOS 上做开发一直是很惬意的一件事情，因为是 Unix-like 系统在环境的搭建方面有着很多便利，但在安装 Jekyll 时却遇到了不少坑，这里记录下。" />
+<meta property="og:description" content="在 MacOS 上做开发一直是很惬意的一件事情，因为是 Unix-like 系统在环境的搭建方面有着很多便利，但在安装 Jekyll 时却遇到了不少坑，这里记录下。" />
+<link rel="canonical" href="http://localhost:4000/jekyll/update/2018/12/04/macos-install-jekyll-problems.html" />
+<meta property="og:url" content="http://localhost:4000/jekyll/update/2018/12/04/macos-install-jekyll-problems.html" />
+<meta property="og:site_name" content="iinTERest’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-12-04T09:37:44+08:00" />
+<script type="application/ld+json">
+{"headline":"MacOS 安装 Jekyll 踩过的坑","dateModified":"2018-12-04T09:37:44+08:00","datePublished":"2018-12-04T09:37:44+08:00","url":"http://localhost:4000/jekyll/update/2018/12/04/macos-install-jekyll-problems.html","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll/update/2018/12/04/macos-install-jekyll-problems.html"},"description":"在 MacOS 上做开发一直是很惬意的一件事情，因为是 Unix-like 系统在环境的搭建方面有着很多便利，但在安装 Jekyll 时却遇到了不少坑，这里记录下。","@type":"BlogPosting","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="iinTERest's Blog" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">iinTERest&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">MacOS 安装 Jekyll 踩过的坑</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2018-12-04T09:37:44+08:00" itemprop="datePublished">Dec 4, 2018
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>在 MacOS 上做开发一直是很惬意的一件事情，因为是 Unix-like 系统在环境的搭建方面有着很多便利，但在安装 Jekyll 时却遇到了不少坑，这里记录下。</p>
+
+<h2 id="一安装">一、安装</h2>
+
+<p>安装之前先要确认下安装的环境，需要先安装 Xcode、Ruby，虽然 MacOS 自带 Ruby，但版本比较低（2.3.0），所以我还是手动安装了一个最新版的 Ruby：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install ruby
+</code></pre></div></div>
+<p>并配置环境变量，<code class="highlighter-rouge">.bash_profile</code>：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PATH=$PATH:/usr/local/Cellar/ruby/2.5.3_1/bin
+</code></pre></div></div>
+
+<p>接下来按照官方文档执行安装命令：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sodu gem install bundler jekyll
+</code></pre></div></div>
+
+<p>这个时候出现报错：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERROR:  Error installing jekyll:
+ERROR: Failed to build gem native extension.
+......
+</code></pre></div></div>
+<p>查了下 <a href="https://stackoverflow.com/questions/10725767/error-installing-jekyll-native-extension-build">stackoverflow</a>，是缺少 Xcode-select 工具，可以用以下命令安装：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcode-select --install
+</code></pre></div></div>
+<p>再次执行 jekyll 安装命令，安装完成。</p>
+
+<h2 id="二运行">二、运行</h2>
+
+<p>安装好 jekyll 后习惯性的运行 <code class="highlighter-rouge">jekyll -v</code> 命令来查看是否安装成功，发现报错：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-bash: jekyll: command not found
+</code></pre></div></div>
+<p>根据经验应该是环境变量没配好，查了下文档（对 Ruby 确实不太了解，囧），可以用 <code class="highlighter-rouge">gem env</code> 命令查看 gem 包的安装目录，然后手动添加了 jekyll 的环境变量，<code class="highlighter-rouge">.bash_profile</code>：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PATH=$PATH:/usr/local/Cellar/ruby/2.5.3_1/bin:/usr/local/lib/ruby/gems/2.5.0/gems/jekyll-3.8.5/exe
+</code></pre></div></div>
+
+<p>运行 <code class="highlighter-rouge">jekyll -v</code> 返回 <code class="highlighter-rouge">jekyll 3.8.5</code>，说明配置成功，接着按照文档执行项目初始化命令：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll new my-awesome-site
+</code></pre></div></div>
+<p>运行过程中再次报错：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Installing eventmachine 1.2.7 with native extensions
+Gem::Ext::BuildError: ERROR: Failed to build gem native extension
+</code></pre></div></div>
+
+<p>原以为只是简单的安装失败，所以按照提示，手动安装了 eventmachine：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install eventmachine
+</code></pre></div></div>
+<p>再次运行项目初始化命令，但还是报错，于是查看详细的错误日志，发现 eventmachine 编译需要 Ruby 2.4 以上版本，而我的 Ruby 编译是 2.3.0，2.3.0 应该是 MacOS 自带的版本，这就非常奇怪了，我明明安装了 2.5.1 版本，配置也OK（which ruby），并且手动安装 eventmachine 也成功了（gem list），怎么这里却是是用的老版本的 Ruby…，查了不少资料后还是无法解决，最后决定安装 rvm 试试能否曲线救国。</p>
+
+<h2 id="三安装-rvm">三、安装 RVM</h2>
+
+<p><a href="https://rvm.io/">RVM</a> 是 Ruby 的版本管理器，因为 rvm 安装需要安装公钥而 Mac OS X 不附带 gpg，所以先安装 gpg：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install gnupg
+</code></pre></div></div>
+<p>接着安装 mpapis 公钥</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+</code></pre></div></div>
+<p>提示<code class="highlighter-rouge">公钥服务器不可用</code>，想了想难道是被墙了？于是为终端设置了下代理<code class="highlighter-rouge">export http_proxy=sock5://127.0.0.1:1080</code>，安装完成，如果没有梯子或者设置有问题，可以尝试以下命令：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
+</code></pre></div></div>
+<p>最后安装 rvm：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>\curl -sSL https://get.rvm.io | bash -s stable
+</code></pre></div></div>
+<p>需要注意的是安装过程中某些域名还是需要梯子才能访问，然后 rvm 会自动安装最新版本的 Ruby，全部安装完成后可以执行 <code class="highlighter-rouge">rvm list</code> 命令查看当前所用 Ruby 版本，可以看到是最新的 2.5.1：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>=* ruby-2.5.1 [ x86_64 ]
+# =&gt; - current
+# =* - current &amp;&amp; default
+#  * - default
+</code></pre></div></div>
+<p>再次尝试 jekyll 生成新的项目：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll new my-awesome-site
+</code></pre></div></div>
+<p>执行成功！</p>
+
+<p>至此 jekyll 安装完成，基本上能踩的坑都已经踩了吧。。。相比熟悉的 NodeJS 确实要折腾很多。</p>
+
+  </div><a class="u-url" href="/jekyll/update/2018/12/04/macos-install-jekyll-problems.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">iinTERest&#39;s Blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">iinTERest&#39;s Blog</li><li><a class="u-email" href="mailto:iinterest.bell@gmail.com">iinterest.bell@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/iinterest"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">iinterest</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>仰望天空、脚踏实地。</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
