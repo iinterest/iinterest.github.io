@@ -9,13 +9,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="在 MacOS 上做开发一直是很惬意的一件事情，因为是 Unix-like 系统在环境的搭建方面有着很多便利，但在安装 Jekyll 时却遇到了不少坑，这里记录下。" />
 <meta property="og:description" content="在 MacOS 上做开发一直是很惬意的一件事情，因为是 Unix-like 系统在环境的搭建方面有着很多便利，但在安装 Jekyll 时却遇到了不少坑，这里记录下。" />
-<link rel="canonical" href="http://localhost:4000/jekyll/update/2018/12/04/macos-install-jekyll-problems.html" />
-<meta property="og:url" content="http://localhost:4000/jekyll/update/2018/12/04/macos-install-jekyll-problems.html" />
+<link rel="canonical" href="http://localhost:4000/jekyll/2018/12/04/macos-install-jekyll-problems.html" />
+<meta property="og:url" content="http://localhost:4000/jekyll/2018/12/04/macos-install-jekyll-problems.html" />
 <meta property="og:site_name" content="iinTERest’s Blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2018-12-04T09:37:44+08:00" />
 <script type="application/ld+json">
-{"headline":"MacOS 安装 Jekyll 踩过的坑","dateModified":"2018-12-04T09:37:44+08:00","datePublished":"2018-12-04T09:37:44+08:00","url":"http://localhost:4000/jekyll/update/2018/12/04/macos-install-jekyll-problems.html","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll/update/2018/12/04/macos-install-jekyll-problems.html"},"description":"在 MacOS 上做开发一直是很惬意的一件事情，因为是 Unix-like 系统在环境的搭建方面有着很多便利，但在安装 Jekyll 时却遇到了不少坑，这里记录下。","@type":"BlogPosting","@context":"http://schema.org"}</script>
+{"headline":"MacOS 安装 Jekyll 踩过的坑","dateModified":"2018-12-04T09:37:44+08:00","datePublished":"2018-12-04T09:37:44+08:00","url":"http://localhost:4000/jekyll/2018/12/04/macos-install-jekyll-problems.html","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll/2018/12/04/macos-install-jekyll-problems.html"},"description":"在 MacOS 上做开发一直是很惬意的一件事情，因为是 Unix-like 系统在环境的搭建方面有着很多便利，但在安装 Jekyll 时却遇到了不少坑，这里记录下。","@type":"BlogPosting","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="iinTERest's Blog" /></head>
 <body><header class="site-header" role="banner">
@@ -51,25 +51,25 @@
 
 <p>安装之前先要确认下安装的环境，需要先安装 Xcode、Ruby，虽然 MacOS 自带 Ruby，但版本比较低（2.3.0），所以我还是手动安装了一个最新版的 Ruby：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install ruby
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>ruby
 </code></pre></div></div>
 <p>并配置环境变量，<code class="highlighter-rouge">.bash_profile</code>：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PATH=$PATH:/usr/local/Cellar/ruby/2.5.3_1/bin
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/usr/local/Cellar/ruby/2.5.3_1/bin
 </code></pre></div></div>
 
 <p>接下来按照官方文档执行安装命令：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sodu gem install bundler jekyll
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sodu gem <span class="nb">install </span>bundler jekyll
 </code></pre></div></div>
 
 <p>这个时候出现报错：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERROR:  Error installing jekyll:
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERROR:  Error installing jekyll:
 ERROR: Failed to build gem native extension.
 ......
 </code></pre></div></div>
 <p>查了下 <a href="https://stackoverflow.com/questions/10725767/error-installing-jekyll-native-extension-build">stackoverflow</a>，是缺少 Xcode-select 工具，可以用以下命令安装：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcode-select --install
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcode-select <span class="nt">--install</span>
 </code></pre></div></div>
 <p>再次执行 jekyll 安装命令，安装完成。</p>
 
@@ -77,56 +77,56 @@ ERROR: Failed to build gem native extension.
 
 <p>安装好 jekyll 后习惯性的运行 <code class="highlighter-rouge">jekyll -v</code> 命令来查看是否安装成功，发现报错：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-bash: jekyll: command not found
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">-bash</span>: jekyll: <span class="nb">command </span>not found
 </code></pre></div></div>
 <p>根据经验应该是环境变量没配好，查了下文档（对 Ruby 确实不太了解，囧），可以用 <code class="highlighter-rouge">gem env</code> 命令查看 gem 包的安装目录，然后手动添加了 jekyll 的环境变量，<code class="highlighter-rouge">.bash_profile</code>：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PATH=$PATH:/usr/local/Cellar/ruby/2.5.3_1/bin:/usr/local/lib/ruby/gems/2.5.0/gems/jekyll-3.8.5/exe
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/usr/local/Cellar/ruby/2.5.3_1/bin:/usr/local/lib/ruby/gems/2.5.0/gems/jekyll-3.8.5/exe
 </code></pre></div></div>
 
 <p>运行 <code class="highlighter-rouge">jekyll -v</code> 返回 <code class="highlighter-rouge">jekyll 3.8.5</code>，说明配置成功，接着按照文档执行项目初始化命令：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll new my-awesome-site
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll new my-awesome-site
 </code></pre></div></div>
 <p>运行过程中再次报错：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Installing eventmachine 1.2.7 with native extensions
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Installing eventmachine 1.2.7 with native extensions
 Gem::Ext::BuildError: ERROR: Failed to build gem native extension
 </code></pre></div></div>
 
 <p>原以为只是简单的安装失败，所以按照提示，手动安装了 eventmachine：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install eventmachine
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem <span class="nb">install </span>eventmachine
 </code></pre></div></div>
 <p>再次运行项目初始化命令，但还是报错，于是查看详细的错误日志，发现 eventmachine 编译需要 Ruby 2.4 以上版本，而我的 Ruby 编译是 2.3.0，2.3.0 应该是 MacOS 自带的版本，这就非常奇怪了，我明明安装了 2.5.1 版本，配置也OK（which ruby），并且手动安装 eventmachine 也成功了（gem list），怎么这里却是是用的老版本的 Ruby…，查了不少资料后还是无法解决，最后决定安装 rvm 试试能否曲线救国。</p>
 
 <h2 id="三安装-rvm">三、安装 RVM</h2>
 
 <p><a href="https://rvm.io/">RVM</a> 是 Ruby 的版本管理器，因为 rvm 安装需要安装公钥而 Mac OS X 不附带 gpg，所以先安装 gpg：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install gnupg
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>gnupg
 </code></pre></div></div>
 <p>接着安装 mpapis 公钥</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg <span class="nt">--keyserver</span> hkp://keys.gnupg.net <span class="nt">--recv-keys</span> 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 </code></pre></div></div>
 <p>提示<code class="highlighter-rouge">公钥服务器不可用</code>，想了想难道是被墙了？于是为终端设置了下代理<code class="highlighter-rouge">export http_proxy=sock5://127.0.0.1:1080</code>，安装完成，如果没有梯子或者设置有问题，可以尝试以下命令：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-sSL</span> https://rvm.io/mpapis.asc | gpg2 <span class="nt">--import</span> -
 </code></pre></div></div>
 <p>最后安装 rvm：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>\curl -sSL https://get.rvm.io | bash -s stable
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="se">\c</span>url <span class="nt">-sSL</span> https://get.rvm.io | bash <span class="nt">-s</span> stable
 </code></pre></div></div>
 <p>需要注意的是安装过程中某些域名还是需要梯子才能访问，然后 rvm 会自动安装最新版本的 Ruby，全部安装完成后可以执行 <code class="highlighter-rouge">rvm list</code> 命令查看当前所用 Ruby 版本，可以看到是最新的 2.5.1：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>=* ruby-2.5.1 [ x86_64 ]
-# =&gt; - current
-# =* - current &amp;&amp; default
-#  * - default
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">=</span><span class="k">*</span> ruby-2.5.1 <span class="o">[</span> x86_64 <span class="o">]</span>
+<span class="c"># =&gt; - current</span>
+<span class="c"># =* - current &amp;&amp; default</span>
+<span class="c">#  * - default</span>
 </code></pre></div></div>
 <p>再次尝试 jekyll 生成新的项目：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll new my-awesome-site
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll new my-awesome-site
 </code></pre></div></div>
 <p>执行成功！</p>
 
 <p>至此 jekyll 安装完成，基本上能踩的坑都已经踩了吧。。。相比熟悉的 NodeJS 确实要折腾很多。</p>
 
-  </div><a class="u-url" href="/jekyll/update/2018/12/04/macos-install-jekyll-problems.html" hidden></a>
+  </div><a class="u-url" href="/jekyll/2018/12/04/macos-install-jekyll-problems.html" hidden></a>
 </article>
 
       </div>
